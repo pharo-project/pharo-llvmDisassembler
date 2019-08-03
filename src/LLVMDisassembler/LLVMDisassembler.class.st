@@ -149,6 +149,7 @@ LLVMDisassembler >> finalize [
 { #category : #initialization }
 LLVMDisassembler >> initialize [
 
+	super initialize.
 	WeakRegistry default add: self
 ]
 
