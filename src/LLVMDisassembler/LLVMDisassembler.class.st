@@ -22,6 +22,9 @@ Alternatively, the convenience method #disassembleNext:instructionsIn:pc: disass
 Class {
 	#name : #LLVMDisassembler,
 	#superclass : #FFIExternalObject,
+	#instVars : [
+		'options'
+	],
 	#category : #LLVMDisassembler
 }
 
@@ -58,6 +61,7 @@ LLVMDisassembler class >> createDisassembler: aTripleString [
 		symbolLookupCallback: nil.
 	disassembler isNull ifTrue: [ 
 		self error: 'Could not instantiate disassembler for: ', aTripleString ].
+	disassembler initialize.
 	^ disassembler
 ]
 
@@ -138,6 +142,12 @@ LLVMDisassembler >> dispose [
 	self ffiCall: #(void LLVMDisasmDispose(self))
 ]
 
+{ #category : #configuring }
+LLVMDisassembler >> ensureOption: value [
+	
+	self setOptions: (options := options bitOr: value)
+]
+
 { #category : #resources }
 LLVMDisassembler >> ffiLibrary [
 
@@ -153,12 +163,37 @@ LLVMDisassembler >> finalize [
 { #category : #initialization }
 LLVMDisassembler >> initialize [
 
-	super initialize.
+	"Should not call super initialize, because it will reinitialize the handle..."
+	options := 0.
 	WeakRegistry default add: self
+]
+
+{ #category : #configuration }
+LLVMDisassembler >> printImmediatesInHexa [
+
+	self ensureOption: "LLVMDisassembler_Option_PrintImmHex" 2
+]
+
+{ #category : #configuration }
+LLVMDisassembler >> printLatency [
+
+	self ensureOption: "LLVMDisassembler_Option_PrintLatency" 16
+]
+
+{ #category : #configuration }
+LLVMDisassembler >> setInstructionComments [
+
+	self ensureOption: "LLVMDisassembler_Option_SetInstrComments" 8
 ]
 
 { #category : #initialization }
 LLVMDisassembler >> setOptions: options [
 
 	self ffiCall: #(int LLVMSetDisasmOptions(self, uint64 options))
+]
+
+{ #category : #configuring }
+LLVMDisassembler >> useAlternatePrinterVariant [
+	
+	self ensureOption: "LLVMDisassembler_Option_AsmPrinterVariant" 4
 ]
