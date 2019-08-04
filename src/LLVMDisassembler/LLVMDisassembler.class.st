@@ -28,18 +28,21 @@ Class {
 { #category : #'instance-creation' }
 LLVMDisassembler class >> amd64 [
 
+	LLVMTarget initializeX86.
 	^ self createDisassembler: 'amd64'
 ]
 
 { #category : #'instance-creation' }
 LLVMDisassembler class >> arm [
 
+	LLVMTarget initializeARM.
 	^ self createDisassembler: 'arm'
 ]
 
 { #category : #'instance-creation' }
 LLVMDisassembler class >> arm64 [
 
+	LLVMTarget initializeAArch64.
 	^ self createDisassembler: 'arm64'
 ]
 
@@ -87,6 +90,7 @@ LLVMDisassembler class >> ffiLibrary [
 { #category : #'instance-creation' }
 LLVMDisassembler class >> i386 [
 
+	LLVMTarget initializeX86.
 	^ self createDisassembler: 'i386'
 ]
 
