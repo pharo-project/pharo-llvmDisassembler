@@ -117,9 +117,16 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 		pc: pc
 		outString: string
 		outStringSize: string size.
-	^ {
-		(string utf8Decoded trimBoth: [ :char | char isSeparator | (char = Character null) ]).
-		opsize }
+		
+	opsize = 0 ifTrue: [ 
+		LLVMInvalidInstructionError new
+			instruction: bytes first;
+			signal ].
+	
+	^ LLVMInstruction new
+		assembly: (string utf8Decoded trimBoth: [ :char | char isSeparator | (char = Character null) ]);
+		size: opsize;
+		yourself
 ]
 
 { #category : #disassembling }
@@ -128,10 +135,10 @@ LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes 
 	| instructions bytesToDisassemble result |
 	instructions := OrderedCollection new.
 	bytesToDisassemble := bytes.
-	instructions size < numberOfInstructions whileTrue: [
-		result := self disassembleInstructionIn: bytes pc: pc.
-		instructions add: result first.
-		bytesToDisassemble := bytesToDisassemble allButFirst: result second.
+	[instructions size < numberOfInstructions] whileTrue: [
+		result := self disassembleInstructionIn: bytesToDisassemble pc: pc.
+		instructions add: result.
+		bytesToDisassemble := bytesToDisassemble allButFirst: result size.
 	].
 	^ instructions
 ]
