@@ -16,8 +16,7 @@ Class {
 
 { #category : #accessing }
 LLVMTarget class >> ffiLibrary [
-
-	^ 'libLLVM.dylib' asFFILibrary
+	^ LibLLVMDisassembler
 ]
 
 { #category : #accessing }

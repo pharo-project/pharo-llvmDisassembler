@@ -87,8 +87,7 @@ LLVMDisassembler class >> createDisassemblerForTriple: aTripleName info: disInfo
 
 { #category : #resources }
 LLVMDisassembler class >> ffiLibrary [
-
-	^ 'libLLVM.dylib' asFFILibrary
+	^ LibLLVMDisassembler
 ]
 
 { #category : #'instance-creation' }
