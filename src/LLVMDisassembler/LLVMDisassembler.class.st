@@ -136,7 +136,10 @@ LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes 
 	offset := 0.
 	bytesToDisassemble := bytes.
 	[instructions size < numberOfInstructions] whileTrue: [
-		result := self disassembleInstructionIn: bytesToDisassemble pc: pc.
+		"Stop when no more valid instructions are found"
+		[ result := self disassembleInstructionIn: bytesToDisassemble pc: pc ]
+			on: LLVMInvalidInstructionError
+			do: [ ^ instructions].
 		result offset: offset.
 		result address: startAddress + offset.
 		offset := offset + result size. 
