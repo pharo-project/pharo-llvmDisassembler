@@ -129,13 +129,17 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 ]
 
 { #category : #disassembling }
-LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes pc: pc [
+LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes startAddress: startAddress pc: pc [
 
-	| instructions bytesToDisassemble result |
+	| instructions bytesToDisassemble result offset |
 	instructions := OrderedCollection new.
+	offset := 0.
 	bytesToDisassemble := bytes.
 	[instructions size < numberOfInstructions] whileTrue: [
 		result := self disassembleInstructionIn: bytesToDisassemble pc: pc.
+		result offset: offset.
+		result address: startAddress + offset.
+		offset := offset + result size. 
 		instructions add: result.
 		bytesToDisassemble := bytesToDisassemble allButFirst: result size.
 	].
