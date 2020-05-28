@@ -37,6 +37,12 @@ LLVMInstruction >> assemblyCodeString [
 ]
 
 { #category : #accessing }
+LLVMInstruction >> codeBytesString: memory [
+	
+	^ (memory copyFrom: address to: address + size - 1) printString
+]
+
+{ #category : #accessing }
 LLVMInstruction >> offset [
 	^ offset
 ]
