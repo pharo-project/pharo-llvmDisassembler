@@ -50,6 +50,13 @@ LLVMDisassembler class >> arm64 [
 ]
 
 { #category : #'instance-creation' }
+LLVMDisassembler class >> armv5 [
+
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv5'
+]
+
+{ #category : #'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString [
 
 	| disassembler |
