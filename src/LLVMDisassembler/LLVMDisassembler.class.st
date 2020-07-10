@@ -29,6 +29,13 @@ Class {
 }
 
 { #category : #'instance-creation' }
+LLVMDisassembler class >> aarch64 [
+	"Returns a disassembler for ARMv8 A64 encoding"
+	LLVMTarget initializeAArch64.
+	^ self createDisassembler: 'aarch64'
+]
+
+{ #category : #'instance-creation' }
 LLVMDisassembler class >> amd64 [
 
 	LLVMTarget initializeX86.
@@ -54,6 +61,13 @@ LLVMDisassembler class >> armv5 [
 
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'armv5'
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> armv8 [
+	"Returns a disassembler for ARMv8 A32 encoding"
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv8'
 ]
 
 { #category : #'instance-creation' }

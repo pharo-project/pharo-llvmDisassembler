@@ -56,7 +56,7 @@ LLVMInstruction >> offset: anObject [
 LLVMInstruction >> printOn: aStream [
 
 	aStream
-		nextPutAll: (address printStringBase: 16 length: 8 padded: true);
+		print: (address ifNotNil: [(address printStringBase: 16 length: 8 padded: true)]);
 		nextPutAll: ':';
 		tab;
 		nextPutAll: assembly
