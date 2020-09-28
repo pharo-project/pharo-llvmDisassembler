@@ -63,6 +63,36 @@ LLVMDisassembler class >> armv5 [
 	^ self createDisassembler: 'armv5'
 ]
 
+{ #category : #'as yet unclassified' }
+LLVMDisassembler class >> armv6 [
+
+	"Returns a disassembler for ARMv8 A32 encoding"
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv6'
+]
+
+{ #category : #'as yet unclassified' }
+LLVMDisassembler class >> armv6k [
+
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv6k'
+	
+]
+
+{ #category : #'as yet unclassified' }
+LLVMDisassembler class >> armv6m [
+
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv6m'
+]
+
+{ #category : #'as yet unclassified' }
+LLVMDisassembler class >> armv7 [
+	
+	LLVMTarget initializeARM.
+	^ self createDisassembler: 'armv7'
+]
+
 { #category : #'instance-creation' }
 LLVMDisassembler class >> armv8 [
 	"Returns a disassembler for ARMv8 A32 encoding"
