@@ -182,20 +182,18 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 { #category : #disassembling }
 LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes startAddress: startAddress pc: pc [
 
-	| instructions bytesToDisassemble result offset |
+	| instructions result offset |
 	instructions := OrderedCollection new.
 	offset := 0.
-	bytesToDisassemble := bytes.
 	[instructions size < numberOfInstructions] whileTrue: [
 		"Stop when no more valid instructions are found"
-		[ result := self disassembleInstructionIn: bytesToDisassemble pc: pc ]
+		[ result := self disassembleInstructionIn: (bytes copyFrom: offset + 1 to: ((offset + 50) min: bytes size) "assume 50 bytes tops per instruction") pc: pc ]
 			on: LLVMInvalidInstructionError
 			do: [ ^ instructions].
 		result offset: offset.
 		result address: startAddress + offset.
 		offset := offset + result size. 
 		instructions add: result.
-		bytesToDisassemble := bytesToDisassemble allButFirst: result size.
 	].
 	^ instructions
 ]
