@@ -37,9 +37,21 @@ LLVMInstruction >> assemblyCodeString [
 ]
 
 { #category : #accessing }
+LLVMInstruction >> branchTargetAddress [
+	
+	^ nil
+]
+
+{ #category : #accessing }
+LLVMInstruction >> codeBytes: memory [
+	
+	^ memory copyFrom: address to: address + size - 1
+]
+
+{ #category : #accessing }
 LLVMInstruction >> codeBytesString: memory [
 	
-	^ (memory copyFrom: address to: address + size - 1) printString
+	^ (self codeBytes: memory) printString
 ]
 
 { #category : #accessing }

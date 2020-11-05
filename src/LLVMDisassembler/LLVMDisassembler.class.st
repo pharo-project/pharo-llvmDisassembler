@@ -119,21 +119,11 @@ LLVMDisassembler class >> createDisassembler: aTripleString [
 { #category : #'instance-creation' }
 LLVMDisassembler class >> createDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
 
-	"/**
-	 * Create a disassembler for the TripleName.  Symbolic disassembly is supported
-	 * by passing a block of information in the DisInfo parameter and specifying the
-	 * TagType and callback functions as described above.  These can all be passed
-	 * as NULL.  If successful, this returns a disassembler context.  If not, it
-	 * returns NULL. This function is equivalent to calling
-	 * LLVMCreateDisasmCPUFeatures() with an empty CPU name and feature set.
-	 */
-	LLVMDisasmContextRef LLVMCreateDisasm(const char *TripleName, void *DisInfo,
-                                      int TagType, LLVMOpInfoCallback GetOpInfo,
-                                      LLVMSymbolLookupCallback SymbolLookUp);"
 
-	self ffiCall: #(LLVMDisassembler LLVMCreateDisasm( char *aTripleName, void *disInfo,
-                                      int tagType, void* getOpInfo,
-                                      void* symbolLookUp))
+	| address |
+	address := self primCreateDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp.
+
+	^ self fromHandle: address
 ]
 
 { #category : #resources }
@@ -146,6 +136,40 @@ LLVMDisassembler class >> i386 [
 
 	LLVMTarget initializeX86.
 	^ self createDisassembler: 'i386'
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
+
+	"/**
+	 * Create a disassembler for the TripleName.  Symbolic disassembly is supported
+	 * by passing a block of information in the DisInfo parameter and specifying the
+	 * TagType and callback functions as described above.  These can all be passed
+	 * as NULL.  If successful, this returns a disassembler context.  If not, it
+	 * returns NULL. This function is equivalent to calling
+	 * LLVMCreateDisasmCPUFeatures() with an empty CPU name and feature set.
+	 */
+	LLVMDisasmContextRef LLVMCreateDisasm(const char *TripleName, void *DisInfo,
+                                      int TagType, LLVMOpInfoCallback GetOpInfo,
+                                      LLVMSymbolLookupCallback SymbolLookUp);"
+
+	self ffiCall: #(void* LLVMCreateDisasm( char *aTripleName, void *disInfo,
+                                      int tagType, void* getOpInfo,
+                                      void* symbolLookUp))
+]
+
+{ #category : #disassembling }
+LLVMDisassembler >> disassembleInstructionBytes: instructionBytes address: startAddress pc: pc [
+
+	| result |
+
+		[ result := self disassembleInstructionIn: instructionBytes pc: pc ]
+			on: LLVMInvalidInstructionError
+			do: [ ^ nil].
+		
+		result address: startAddress.
+		
+		^ result
 ]
 
 { #category : #disassembling }
@@ -173,7 +197,7 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 			instruction: bytes first;
 			signal ].
 	
-	^ LLVMInstruction new
+	^ self newInstruction
 		assembly: (string utf8Decoded trimBoth: [ :char | char isSeparator | (char = Character null) ]);
 		size: opsize;
 		yourself
@@ -182,19 +206,26 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 { #category : #disassembling }
 LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes startAddress: startAddress pc: pc [
 
-	| instructions result offset |
+	| instructions result offset instructionBytes |
 	instructions := OrderedCollection new.
 	offset := 0.
-	[instructions size < numberOfInstructions] whileTrue: [
-		"Stop when no more valid instructions are found"
-		[ result := self disassembleInstructionIn: (bytes copyFrom: offset + 1 to: ((offset + 50) min: bytes size) "assume 50 bytes tops per instruction") pc: pc ]
-			on: LLVMInvalidInstructionError
-			do: [ ^ instructions].
-		result offset: offset.
-		result address: startAddress + offset.
-		offset := offset + result size. 
-		instructions add: result.
-	].
+	[instructions size < numberOfInstructions] 
+		whileTrue: [
+			"assume 50 bytes tops per instruction"
+			instructionBytes := bytes copyFrom: offset + 1 to: ((offset + 50) min: bytes size).
+			
+			result := self 
+				disassembleInstructionBytes: instructionBytes 
+				address: startAddress + offset 
+				pc: pc. 
+
+			"Stop when no more valid instructions are found"
+			result ifNil: [ ^ instructions ].
+
+			result offset: offset.
+			offset := offset + result size. 
+			instructions add: result].
+	
 	^ instructions
 ]
 
@@ -228,6 +259,12 @@ LLVMDisassembler >> initialize [
 	"Should not call super initialize, because it will reinitialize the handle..."
 	options := 0.
 	WeakRegistry default add: self
+]
+
+{ #category : #factory }
+LLVMDisassembler >> newInstruction [
+
+	^ LLVMInstruction new
 ]
 
 { #category : #configuration }
