@@ -158,6 +158,20 @@ LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName info: dis
                                       void* symbolLookUp))
 ]
 
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> riscv32 [
+
+	LLVMTarget initializeRISCV.
+	^ self createDisassembler: 'riscv32'
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> riscv64 [
+
+	LLVMTarget initializeRISCV.
+	^ self createDisassembler: 'riscv64'
+]
+
 { #category : #disassembling }
 LLVMDisassembler >> disassembleInstructionBytes: instructionBytes address: startAddress pc: pc [
 

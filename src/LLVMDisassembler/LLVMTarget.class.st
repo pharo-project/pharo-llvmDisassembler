@@ -113,6 +113,46 @@ LLVMTarget class >> initializeARMTargetMC [
 ]
 
 { #category : #accessing }
+LLVMTarget class >> initializeRISCV [
+
+	self initializeRISCVTarget.
+	self initializeRISCVTargetInfo.
+	self initializeRISCVTargetMC.
+	self initializeRISCVDisassembler.
+	self initializeRISCVAsmPrinter.
+]
+
+{ #category : #accessing }
+LLVMTarget class >> initializeRISCVAsmPrinter [
+
+	self ffiCall: #(void LLVMInitializeRISCVAsmPrinter())
+]
+
+{ #category : #accessing }
+LLVMTarget class >> initializeRISCVDisassembler [
+
+	self ffiCall: #(void LLVMInitializeRISCVDisassembler())
+]
+
+{ #category : #accessing }
+LLVMTarget class >> initializeRISCVTarget [
+
+	self ffiCall: #(void LLVMInitializeRISCVTarget())
+]
+
+{ #category : #accessing }
+LLVMTarget class >> initializeRISCVTargetInfo [
+
+	self ffiCall: #(void LLVMInitializeRISCVTargetInfo())
+]
+
+{ #category : #accessing }
+LLVMTarget class >> initializeRISCVTargetMC [
+
+	self ffiCall: #(void LLVMInitializeRISCVTargetMC())
+]
+
+{ #category : #accessing }
 LLVMTarget class >> initializeX86 [
 
 	self initializeX86Target.
