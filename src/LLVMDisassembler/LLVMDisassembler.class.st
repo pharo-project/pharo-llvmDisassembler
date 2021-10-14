@@ -191,7 +191,7 @@ LLVMDisassembler class >> riscv32 [
 LLVMDisassembler class >> riscv64 [
 
 	LLVMTarget initializeRISCV.
-	^ self createDisassembler: 'riscv64' withCPUFeatures: '+i,+m,+a,+f,+d,+c'
+	^ self createDisassembler: 'riscv64' withCPUFeatures: '+m,+a,+f,+d,+c'
 ]
 
 { #category : #disassembling }
