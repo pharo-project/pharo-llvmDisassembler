@@ -245,23 +245,23 @@ LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes 
 	| instructions result offset instructionBytes |
 	instructions := OrderedCollection new.
 	offset := 0.
-	[instructions size < numberOfInstructions] 
-		whileTrue: [
-			"assume 50 bytes tops per instruction"
-			instructionBytes := bytes copyFrom: offset + 1 to: ((offset + 50) min: bytes size).
-			
-			result := self 
-				disassembleInstructionBytes: instructionBytes 
-				address: startAddress + offset 
-				pc: pc. 
+	[ instructions size < numberOfInstructions ] whileTrue: [ "assume 50 bytes tops per instruction"
+		instructionBytes := bytes
+			                    copyFrom: (offset + 1 min: bytes size)
+			                    to: (offset + 50 min: bytes size).
 
-			"Stop when no more valid instructions are found"
-			result ifNil: [ ^ instructions ].
+		result := self
+			          disassembleInstructionBytes: instructionBytes
+			          address: startAddress + offset
+			          pc: pc.
 
-			result offset: offset.
-			offset := offset + result size. 
-			instructions add: result].
-	
+		"Stop when no more valid instructions are found"
+		result ifNil: [ ^ instructions ].
+
+		result offset: offset.
+		offset := offset + result size.
+		instructions add: result ].
+
 	^ instructions
 ]
 
