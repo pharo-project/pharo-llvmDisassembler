@@ -25,15 +25,17 @@ LLVMARMDisassembler >> newInstruction [
 ]
 
 { #category : #factory }
-LLVMARMDisassembler >> newInvalidInstruction: bytes address: address [ 
-	
-	| instruction |
+LLVMARMDisassembler >> newInvalidInstruction: bytes address: address [
 
+	| instruction hex |
 	instruction := self newInstruction.
 	instruction address: address.
 	instruction size: 4.
-	instruction assembly: '.inst undefined ', (bytes integerAt: 1 size: 4 signed: false) hex.
 
-	^ instruction 
-	
+	hex := bytes size >= 4
+		       ifTrue: [ (bytes integerAt: 1 size: 4 signed: false) hex ]
+		       ifFalse: [ bytes hex ].
+	instruction assembly: '.inst undefined ' , hex.
+
+	^ instruction
 ]
