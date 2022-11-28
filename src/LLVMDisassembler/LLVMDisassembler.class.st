@@ -103,9 +103,23 @@ LLVMDisassembler class >> armv8 [
 { #category : #'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString [
 
+	^ self createDisassembler: aTripleString withCPU: '' withCPUFeatures: ''
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString [
+
+	^ self createDisassembler: aTripleString withCPU: aCPUString withCPUFeatures: ''
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString withCPUFeatures: aFeaturesString [ 
+
 	| disassembler |
 	disassembler := self
 		createDisassemblerForTriple: aTripleString
+		cpu: aCPUString
+		features: aFeaturesString 
 		info: nil
 		tagType: 0
 		opInfoCallback: nil
@@ -117,11 +131,17 @@ LLVMDisassembler class >> createDisassembler: aTripleString [
 ]
 
 { #category : #'instance-creation' }
-LLVMDisassembler class >> createDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
+LLVMDisassembler class >> createDisassembler: aTripleString withCPUFeatures: aFeaturesString [ 
+
+	^ self createDisassembler: aTripleString withCPU: '' withCPUFeatures: aFeaturesString
+]
+
+{ #category : #'instance-creation' }
+LLVMDisassembler class >> createDisassemblerForTriple: aTripleName cpu: cpu features: features info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
 
 
 	| address |
-	address := self primCreateDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp.
+	address := self primCreateDisassemblerForTriple: aTripleName cpu: cpu features: features info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp.
 
 	^ self fromHandle: address
 ]
@@ -139,21 +159,23 @@ LLVMDisassembler class >> i386 [
 ]
 
 { #category : #'instance-creation' }
-LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
+LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName cpu: cpu features: features info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
 
-	"/**
-	 * Create a disassembler for the TripleName.  Symbolic disassembly is supported
-	 * by passing a block of information in the DisInfo parameter and specifying the
-	 * TagType and callback functions as described above.  These can all be passed
-	 * as NULL.  If successful, this returns a disassembler context.  If not, it
-	 * returns NULL. This function is equivalent to calling
-	 * LLVMCreateDisasmCPUFeatures() with an empty CPU name and feature set.
-	 */
-	LLVMDisasmContextRef LLVMCreateDisasm(const char *TripleName, void *DisInfo,
-                                      int TagType, LLVMOpInfoCallback GetOpInfo,
-                                      LLVMSymbolLookupCallback SymbolLookUp);"
+"/** 
+ *  LLVMCreateDisasm() creates a disassembler for the TripleName.  Symbolic
+ *  disassembly is supported by passing a block of information in the DisInfo
+ *  parameter and specifying the TagType and callback functions as described in
+ *  the header llvm-c/Disassembler.h .  The pointer to the block and the
+ *  functions can all be passed as NULL.  If successful, this returns a
+ *  disassembler context.  If not, it returns NULL.
+ */
+ LLVMDisasmContextRef LLVMCreateDisasmCPUFeatures(const char *TT, const char *CPU,
+                      						       const char *Features, void *DisInfo, int TagType,
+                            						 LLVMOpInfoCallback GetOpInfo,
+                             						 LLVMSymbolLookupCallback SymbolLookUp) "
 
-	self ffiCall: #(void* LLVMCreateDisasm( char *aTripleName, void *disInfo,
+	self ffiCall: #(void* LLVMCreateDisasmCPUFeatures( char *aTripleName, char* cpu, 
+												 char *features, void *disInfo,
                                       int tagType, void* getOpInfo,
                                       void* symbolLookUp))
 ]
@@ -169,7 +191,7 @@ LLVMDisassembler class >> riscv32 [
 LLVMDisassembler class >> riscv64 [
 
 	LLVMTarget initializeRISCV.
-	^ self createDisassembler: 'riscv64'
+	^ self createDisassembler: 'riscv64' withCPUFeatures: '+m,+a,+f,+d'
 ]
 
 { #category : #disassembling }
