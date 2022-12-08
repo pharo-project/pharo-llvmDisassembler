@@ -5,8 +5,19 @@ Class {
 }
 
 { #category : #'accessing platform' }
+LibLLVMDisassembler >> knownMacPaths [
+	"Answer a <Collection> of <String> each one representing known libLLVM locations (not necessarily present in the current system"
+	
+	^ { '/usr/local/opt/llvm/lib' }
+]
+
+{ #category : #'accessing platform' }
 LibLLVMDisassembler >> macModuleName [
-	^ 'libLLVM.dylib'
+	"Answer a <String> with the full path to the LLVM library"
+	
+	^ FFIMacLibraryFinder new
+		userPaths: self knownMacPaths;
+		findLibrary: 'libLLVM.dylib'
 ]
 
 { #category : #'accessing platform' }
