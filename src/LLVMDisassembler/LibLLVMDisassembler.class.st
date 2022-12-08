@@ -8,7 +8,10 @@ Class {
 LibLLVMDisassembler >> knownMacPaths [
 	"Answer a <Collection> of <String> each one representing known libLLVM locations (not necessarily present in the current system"
 	
-	^ { '/usr/local/opt/llvm/lib' }
+	^ { 
+		(LibC resultOfCommand: 'llvm-config --libdir') trimBoth .
+		'/usr/local/opt/llvm/lib' 
+		}
 ]
 
 { #category : #'accessing platform' }
