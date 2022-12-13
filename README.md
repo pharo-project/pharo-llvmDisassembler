@@ -1,6 +1,27 @@
 # LLVMDisassembler
 Pharo bindings to the LLVM disassembler.
 
+# Installation
+
+To install including the Tests group:
+```smalltalk
+EpMonitor disableDuring: [ 
+	Metacello new
+		baseline: 'LLVMDisassembler';
+		repository: 'github://hernanmd/pharo-llvmDisassembler:issue-5-';
+		load: #('Tests') ].
+```
+
+## How to depend on it
+
+If you want to add a dependency on `LLVMDisassembler` to your project, include the following lines into your baseline method:
+
+```smalltalk
+spec
+  baseline: 'LLVMDisassembler'
+  with: [ spec repository: 'github://pharo-project/LLVMDisassembler/src' ].
+```
+
 # Usage
 
 To create a disassembler, you can use the #createDisassembler: method using a triple name as argument.
