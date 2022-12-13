@@ -3,12 +3,22 @@ Pharo bindings to the LLVM disassembler.
 
 # Installation
 
+```smalltalk
+
+EpMonitor disableDuring: [ 
+        Metacello new
+                baseline: 'LLVMDisassembler';
+                repository: 'github://pharo-project/pharo-llvmDisassembler';
+                load ].
+```
+
 To install including the Tests group:
+
 ```smalltalk
 EpMonitor disableDuring: [ 
 	Metacello new
 		baseline: 'LLVMDisassembler';
-		repository: 'github://hernanmd/pharo-llvmDisassembler:issue-5-';
+		repository: 'github://pharo-project/pharo-llvmDisassembler';
 		load: #('Tests') ].
 ```
 
