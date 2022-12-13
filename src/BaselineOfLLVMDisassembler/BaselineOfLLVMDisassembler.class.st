@@ -12,10 +12,10 @@ BaselineOfLLVMDisassembler >> baseline: spec [
 		do: [ 
 			spec 
 				package: 'LLVMDisassembler';
-				package: 'LLVMDissasembler-Tests' with: [ spec requires: #('LLVMDisassembler') ].
+				package: 'LLVMDisassembler-Tests' with: [ spec requires: #('LLVMDisassembler') ].
 			spec
 				group: 'Core' with: #('LLVMDisassembler');
-				group: 'Tests' with: #('Core' 'LLVMDissasembler-Tests');
+				group: 'Tests' with: #('Core' 'LLVMDisassembler-Tests');
 				group: 'default' with: #('Core') ]
 ]
 
