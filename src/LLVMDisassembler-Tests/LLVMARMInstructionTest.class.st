@@ -1,7 +1,7 @@
 Class {
 	#name : #LLVMARMInstructionTest,
 	#superclass : #TestCase,
-	#category : #LLVMDisassembler
+	#category : #'LLVMDisassembler-Tests'
 }
 
 { #category : #utils }
