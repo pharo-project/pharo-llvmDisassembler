@@ -32,7 +32,8 @@ LibLLVMDisassembler >> macModuleName [
 
 { #category : #'accessing platform' }
 LibLLVMDisassembler >> unixModuleName [
-	^ 'libLLVM.so'
+
+	^ FFIUnix64LibraryFinder findLibrary: 'libLLVM.so'
 ]
 
 { #category : #'accessing platform' }
