@@ -32,7 +32,7 @@ LibLLVMDisassembler >> macModuleName [
 
 { #category : #'accessing platform' }
 LibLLVMDisassembler >> unixModuleName [
-	^ 'libLLVM-9.so'
+	^ 'libLLVM.so'
 ]
 
 { #category : #'accessing platform' }
