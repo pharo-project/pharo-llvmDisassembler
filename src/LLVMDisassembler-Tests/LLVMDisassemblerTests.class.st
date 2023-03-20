@@ -171,6 +171,15 @@ LLVMDisassemblerTests >> testDisassembleWithAlternatePrinterVariantReturnsAltern
 ]
 
 { #category : #tests }
+LLVMDisassemblerTests >> testInitializeOnlyOnce [
+
+	| dis n |
+	dis := LLVMDisassembler i386.
+	n := WeakRegistry default keys occurrencesOf: dis.
+	self assert: n equals: 1
+]
+
+{ #category : #tests }
 LLVMDisassemblerTests >> testInvalidInstructionErrorContainsInvalidOpcode [
 
 	| dis |
