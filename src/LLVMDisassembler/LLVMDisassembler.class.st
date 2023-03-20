@@ -126,7 +126,6 @@ LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString 
 		symbolLookupCallback: nil.
 	disassembler isNull ifTrue: [ 
 		self error: 'Could not instantiate disassembler for: ', aTripleString ].
-	disassembler initialize.
 	^ disassembler
 ]
 
