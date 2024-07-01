@@ -27,3 +27,23 @@ LibLLVMDisassembler >> knownMacPaths [
 
 	^ llvmConfigPaths , brewPaths
 ]
+
+{ #category : 'accessing - platform' }
+LibLLVMDisassembler >> macLibraryName [
+	"Answer a <String> with the full path to the LLVM library"
+	
+	^ FFIMacLibraryFinder new
+		userPaths: self knownMacPaths;
+		findLibrary: 'libLLVM.dylib'
+]
+
+{ #category : 'accessing - platform' }
+LibLLVMDisassembler >> unixLibraryName [
+
+	^ FFIUnix64LibraryFinder findLibrary: 'libLLVM.so'
+]
+
+{ #category : 'accessing - platform' }
+LibLLVMDisassembler >> win32LibraryName [
+	^ 'libLLVM.dll'
+]
