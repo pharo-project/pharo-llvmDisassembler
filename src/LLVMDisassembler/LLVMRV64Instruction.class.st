@@ -1,10 +1,11 @@
 Class {
-	#name : #LLVMRV64Instruction,
-	#superclass : #LLVMInstruction,
-	#category : #LLVMDisassembler
+	#name : 'LLVMRV64Instruction',
+	#superclass : 'LLVMInstruction',
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMRV64Instruction >> branchTargetAddress [
 	
 	| parts |
@@ -16,7 +17,7 @@ LLVMRV64Instruction >> branchTargetAddress [
 	^ nil.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMRV64Instruction >> parseImmediate: aString [
 
 	^ aString asInteger

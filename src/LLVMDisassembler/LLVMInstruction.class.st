@@ -1,70 +1,71 @@
 Class {
-	#name : #LLVMInstruction,
-	#superclass : #Object,
+	#name : 'LLVMInstruction',
+	#superclass : 'Object',
 	#instVars : [
 		'assembly',
 		'size',
 		'address',
 		'offset'
 	],
-	#category : #LLVMDisassembler
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> address [
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> address: anObject [
 	address := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> assembly [
 	^ assembly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> assembly: aString [ 
 	assembly := aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> assemblyCodeString [
 	
 	^ assembly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> branchTargetAddress [
 	
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> codeBytes: memory [
 	
 	^ memory copyFrom: address to: address + size - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> codeBytesString: memory [
 	
 	^ (self codeBytes: memory) printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> offset [
 	^ offset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> offset: anObject [
 	offset := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> printOn: aStream [
 
 	aStream
@@ -74,12 +75,12 @@ LLVMInstruction >> printOn: aStream [
 		nextPutAll: assembly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> size [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInstruction >> size: anInteger [ 
 	size := anInteger
 ]

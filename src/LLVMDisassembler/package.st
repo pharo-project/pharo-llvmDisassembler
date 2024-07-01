@@ -1,1 +1,1 @@
-Package { #name : #LLVMDisassembler }
+Package { #name : 'LLVMDisassembler' }

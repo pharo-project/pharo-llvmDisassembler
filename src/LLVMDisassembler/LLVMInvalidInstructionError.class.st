@@ -1,18 +1,19 @@
 Class {
-	#name : #LLVMInvalidInstructionError,
-	#superclass : #Error,
+	#name : 'LLVMInvalidInstructionError',
+	#superclass : 'Error',
 	#instVars : [
 		'instruction'
 	],
-	#category : #LLVMDisassembler
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInvalidInstructionError >> instruction [
 	^ instruction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMInvalidInstructionError >> instruction: anInteger [ 
 	instruction := anInteger
 ]

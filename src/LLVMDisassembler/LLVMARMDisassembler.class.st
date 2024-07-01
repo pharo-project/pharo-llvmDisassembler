@@ -1,10 +1,11 @@
 Class {
-	#name : #LLVMARMDisassembler,
-	#superclass : #LLVMDisassembler,
-	#category : #LLVMDisassembler
+	#name : 'LLVMARMDisassembler',
+	#superclass : 'LLVMDisassembler',
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #disassembling }
+{ #category : 'disassembling' }
 LLVMARMDisassembler >> disassembleInstructionBytes: instructionBytes address: startAddress pc: pc [
 
 	| result |
@@ -18,13 +19,13 @@ LLVMARMDisassembler >> disassembleInstructionBytes: instructionBytes address: st
 		^ result
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 LLVMARMDisassembler >> newInstruction [
 
 	^ LLVMARMInstruction new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 LLVMARMDisassembler >> newInvalidInstruction: bytes address: address [
 
 	| instruction hex |

@@ -9,30 +9,31 @@ LLVMTarget initializeARM.
 LLVMTarget initializeARM64.
 "
 Class {
-	#name : #LLVMTarget,
-	#superclass : #FFIExternalObject,
-	#category : #LLVMDisassembler
+	#name : 'LLVMTarget',
+	#superclass : 'FFIExternalObject',
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> ffiLibrary [
 	^ LibLLVMDisassembler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> firstTarget [
 
 	self ffiCall: #(LLVMTarget LLVMGetFirstTarget(void))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> getTargetIn: targetHolder fromTriple: triple errorMessage: errorHolder [
 
 	self ffiCall: #(Boolean LLVMGetTargetFromTriple(const char* triple, LLVMTarget *targetHolder,
                                  char **errorHolder))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64 [
 
 	self initializeAArch64Target.
@@ -42,37 +43,37 @@ LLVMTarget class >> initializeAArch64 [
 	self initializeAArch64AsmPrinter.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64AsmPrinter [
 
 	self ffiCall: #(void LLVMInitializeAArch64AsmPrinter())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64Disassembler [
 
 	self ffiCall: #(void LLVMInitializeAArch64Disassembler())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64Target [
 
 	self ffiCall: #(void LLVMInitializeAArch64Target())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64TargetInfo [
 
 	self ffiCall: #(void LLVMInitializeAArch64TargetInfo())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeAArch64TargetMC [
 
 	self ffiCall: #(void LLVMInitializeAArch64TargetMC())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARM [
 
 	self initializeARMTarget.
@@ -82,37 +83,37 @@ LLVMTarget class >> initializeARM [
 	self initializeARMAsmPrinter.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARMAsmPrinter [
 
 	self ffiCall: #(void LLVMInitializeARMAsmPrinter())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARMDisassembler [
 
 	self ffiCall: #(void LLVMInitializeARMDisassembler())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARMTarget [
 
 	self ffiCall: #(void LLVMInitializeARMTarget())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARMTargetInfo [
 
 	self ffiCall: #(void LLVMInitializeARMTargetInfo())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeARMTargetMC [
 
 	self ffiCall: #(void LLVMInitializeARMTargetMC())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCV [
 
 	self initializeRISCVTarget.
@@ -122,37 +123,37 @@ LLVMTarget class >> initializeRISCV [
 	self initializeRISCVAsmPrinter.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCVAsmPrinter [
 
 	self ffiCall: #(void LLVMInitializeRISCVAsmPrinter())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCVDisassembler [
 
 	self ffiCall: #(void LLVMInitializeRISCVDisassembler())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCVTarget [
 
 	self ffiCall: #(void LLVMInitializeRISCVTarget())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCVTargetInfo [
 
 	self ffiCall: #(void LLVMInitializeRISCVTargetInfo())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeRISCVTargetMC [
 
 	self ffiCall: #(void LLVMInitializeRISCVTargetMC())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86 [
 
 	self initializeX86Target.
@@ -162,55 +163,55 @@ LLVMTarget class >> initializeX86 [
 	self initializeX86AsmPrinter.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86AsmPrinter [
 
 	self ffiCall: #(void LLVMInitializeX86AsmPrinter())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86Disassembler [
 
 	self ffiCall: #(void LLVMInitializeX86Disassembler())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86Target [
 
 	self ffiCall: #(void LLVMInitializeX86Target())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86TargetInfo [
 
 	self ffiCall: #(void LLVMInitializeX86TargetInfo())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget class >> initializeX86TargetMC [
 
 	self ffiCall: #(void LLVMInitializeX86TargetMC())
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget >> description [
 
 	self ffiCall: #(const char *LLVMGetTargetDescription(self))
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 LLVMTarget >> ffiLibrary [
 
 	^ self class ffiLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget >> name [
 
 	self ffiCall: #(const char *LLVMGetTargetName(self))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMTarget >> next [
 
 	self ffiCall: #(LLVMTarget LLVMGetNextTarget(self))

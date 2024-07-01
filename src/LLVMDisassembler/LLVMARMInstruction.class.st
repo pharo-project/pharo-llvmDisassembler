@@ -1,10 +1,11 @@
 Class {
-	#name : #LLVMARMInstruction,
-	#superclass : #LLVMInstruction,
-	#category : #LLVMDisassembler
+	#name : 'LLVMARMInstruction',
+	#superclass : 'LLVMInstruction',
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LLVMARMInstruction >> branchTargetAddress [
 	
 	| parts |
@@ -16,7 +17,7 @@ LLVMARMInstruction >> branchTargetAddress [
 	^ nil.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LLVMARMInstruction >> parseImmediate: aString [
 
 	| immediateString |

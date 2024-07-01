@@ -20,50 +20,51 @@ llvmDisassembler disassembleInstructionIn: x86_CODE32 pc: 0.
 Alternatively, the convenience method #disassembleNext:instructionsIn:pc: disassembles the next N instructions in the byte array.
 "
 Class {
-	#name : #LLVMDisassembler,
-	#superclass : #FFIExternalObject,
+	#name : 'LLVMDisassembler',
+	#superclass : 'FFIExternalObject',
 	#instVars : [
 		'options'
 	],
-	#category : #LLVMDisassembler
+	#category : 'LLVMDisassembler',
+	#package : 'LLVMDisassembler'
 }
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> aarch64 [
 	"Returns a disassembler for ARMv8 A64 encoding"
 	LLVMTarget initializeAArch64.
 	^ self createDisassembler: 'aarch64'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> amd64 [
 
 	LLVMTarget initializeX86.
 	^ self createDisassembler: 'amd64'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> arm [
 
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'arm'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> arm64 [
 
 	LLVMTarget initializeAArch64.
 	^ self createDisassembler: 'arm64'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> armv5 [
 
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'armv5'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LLVMDisassembler class >> armv6 [
 
 	"Returns a disassembler for ARMv8 A32 encoding"
@@ -71,7 +72,7 @@ LLVMDisassembler class >> armv6 [
 	^ self createDisassembler: 'armv6'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LLVMDisassembler class >> armv6k [
 
 	LLVMTarget initializeARM.
@@ -79,40 +80,40 @@ LLVMDisassembler class >> armv6k [
 	
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LLVMDisassembler class >> armv6m [
 
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'armv6m'
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : 'as yet unclassified' }
 LLVMDisassembler class >> armv7 [
 	
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'armv7'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> armv8 [
 	"Returns a disassembler for ARMv8 A32 encoding"
 	LLVMTarget initializeARM.
 	^ self createDisassembler: 'armv8'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString [
 
 	^ self createDisassembler: aTripleString withCPU: '' withCPUFeatures: ''
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString [
 
 	^ self createDisassembler: aTripleString withCPU: aCPUString withCPUFeatures: ''
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString withCPUFeatures: aFeaturesString [ 
 
 	| disassembler |
@@ -129,13 +130,13 @@ LLVMDisassembler class >> createDisassembler: aTripleString withCPU: aCPUString 
 	^ disassembler
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> createDisassembler: aTripleString withCPUFeatures: aFeaturesString [ 
 
 	^ self createDisassembler: aTripleString withCPU: '' withCPUFeatures: aFeaturesString
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> createDisassemblerForTriple: aTripleName cpu: cpu features: features info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
 
 
@@ -145,19 +146,19 @@ LLVMDisassembler class >> createDisassemblerForTriple: aTripleName cpu: cpu feat
 	^ self fromHandle: address
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 LLVMDisassembler class >> ffiLibrary [
 	^ LibLLVMDisassembler
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> i386 [
 
 	LLVMTarget initializeX86.
 	^ self createDisassembler: 'i386'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName cpu: cpu features: features info: disInfo tagType: tagType opInfoCallback: getOpInfo symbolLookupCallback: symbolLookUp [ 
 
 "/** 
@@ -179,21 +180,21 @@ LLVMDisassembler class >> primCreateDisassemblerForTriple: aTripleName cpu: cpu 
                                       void* symbolLookUp))
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> riscv32 [
 
 	LLVMTarget initializeRISCV.
 	^ self createDisassembler: 'riscv32'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : 'instance-creation' }
 LLVMDisassembler class >> riscv64 [
 
 	LLVMTarget initializeRISCV.
 	^ self createDisassembler: 'riscv64' withCPUFeatures: '+m,+a,+f,+d'
 ]
 
-{ #category : #disassembling }
+{ #category : 'disassembling' }
 LLVMDisassembler >> disassembleInstructionBytes: instructionBytes address: startAddress pc: pc [
 
 	| result |
@@ -207,7 +208,7 @@ LLVMDisassembler >> disassembleInstructionBytes: instructionBytes address: start
 		^ result
 ]
 
-{ #category : #disassembling }
+{ #category : 'disassembling' }
 LLVMDisassembler >> disassembleInstructionIn: bytes bufferSize: bytesSize pc: pc outString: outString outStringSize: outStringSize [
 
 	self ffiCall: #(size_t LLVMDisasmInstruction(self, uint8 *bytes,
@@ -215,7 +216,7 @@ LLVMDisassembler >> disassembleInstructionIn: bytes bufferSize: bytesSize pc: pc
                              char *outString, size_t outStringSize))
 ]
 
-{ #category : #disassembling }
+{ #category : 'disassembling' }
 LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 
 	| string opsize |
@@ -238,7 +239,7 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 		yourself
 ]
 
-{ #category : #disassembling }
+{ #category : 'disassembling' }
 LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes startAddress: startAddress pc: pc [
 
 	| instructions result offset instructionBytes |
@@ -264,69 +265,69 @@ LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes 
 	^ instructions
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 LLVMDisassembler >> dispose [
 
 	self ffiCall: #(void LLVMDisasmDispose(self))
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 LLVMDisassembler >> ensureOption: value [
 	
 	self setOptions: (options := options bitOr: value)
 ]
 
-{ #category : #resources }
+{ #category : 'resources' }
 LLVMDisassembler >> ffiLibrary [
 
 	^ self class ffiLibrary
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 LLVMDisassembler >> finalize [
 
 	^ self dispose
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LLVMDisassembler >> initialize [
 
 	"Should not call super initialize, because it will reinitialize the handle..."
 	options := 0.
-	WeakRegistry default add: self
+	FinalizationRegistry default add: self
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 LLVMDisassembler >> newInstruction [
 
 	^ LLVMInstruction new
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 LLVMDisassembler >> printImmediatesInHexa [
 
 	self ensureOption: "LLVMDisassembler_Option_PrintImmHex" 2
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 LLVMDisassembler >> printLatency [
 
 	self ensureOption: "LLVMDisassembler_Option_PrintLatency" 16
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 LLVMDisassembler >> setInstructionComments [
 
 	self ensureOption: "LLVMDisassembler_Option_SetInstrComments" 8
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LLVMDisassembler >> setOptions: options [
 
 	self ffiCall: #(int LLVMSetDisasmOptions(self, uint64 options))
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 LLVMDisassembler >> useAlternatePrinterVariant [
 	
 	self ensureOption: "LLVMDisassembler_Option_AsmPrinterVariant" 4
