@@ -1,10 +1,11 @@
 Class {
-	#name : #LLVMDisassemblerTests,
-	#superclass : #TestCase,
-	#category : #'LLVMDisassembler-Tests'
+	#name : 'LLVMDisassemblerTests',
+	#superclass : 'TestCase',
+	#category : 'LLVMDisassembler-Tests',
+	#package : 'LLVMDisassembler-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleAddressReturnsDecimalImmediateAddress [
 
 	| dis instruction |
@@ -17,7 +18,7 @@ LLVMDisassemblerTests >> testDisassembleAddressReturnsDecimalImmediateAddress [
 	self assert: instruction assembly equals: 'movl	305419896, %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleAddressWithHexaOptionReturnsHexalImmediateAddress [
 
 	| dis instruction |
@@ -31,7 +32,7 @@ LLVMDisassemblerTests >> testDisassembleAddressWithHexaOptionReturnsHexalImmedia
 	self assert: instruction assembly equals: 'movl	0x12345678, %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleImmediateReturnsDecimalStringByDefault [
 
 	| dis instruction |
@@ -41,7 +42,7 @@ LLVMDisassemblerTests >> testDisassembleImmediateReturnsDecimalStringByDefault [
 	self assert: instruction assembly equals: 'movl	$10, %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleImmediateWithHexaOptionsReturnsHexaString [
 
 	| dis instruction |
@@ -52,7 +53,7 @@ LLVMDisassemblerTests >> testDisassembleImmediateWithHexaOptionsReturnsHexaStrin
 	self assert: instruction assembly equals: 'movl	$0xa, %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleIndexedAddressReturnsDecimalIndirectAddress [
 
 	| dis instruction |
@@ -65,7 +66,7 @@ LLVMDisassemblerTests >> testDisassembleIndexedAddressReturnsDecimalIndirectAddr
 	self assert: instruction assembly equals: 'movl	15(%esp), %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleIndexedAddressWithHexaOptionReturnsHexaIndirectAddress [
 
 	| dis instruction |
@@ -79,7 +80,7 @@ LLVMDisassemblerTests >> testDisassembleIndexedAddressWithHexaOptionReturnsHexaI
 	self assert: instruction assembly equals: 'movl	0xf(%esp), %eax'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleInvalidInstructionRaisesException [
 
 	| dis |
@@ -89,7 +90,7 @@ LLVMDisassemblerTests >> testDisassembleInvalidInstructionRaisesException [
 		raise: LLVMInvalidInstructionError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleReturnsInstructionSize [
 
 	| dis instruction |
@@ -99,7 +100,7 @@ LLVMDisassemblerTests >> testDisassembleReturnsInstructionSize [
 	self assert: instruction size equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleReturnsInstructionString [
 
 	| dis instruction |
@@ -109,7 +110,7 @@ LLVMDisassemblerTests >> testDisassembleReturnsInstructionString [
 	self assert: instruction assembly equals: 'incl	%ecx'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressReturnsDecimalScaledAddress [
 
 	| dis instruction |
@@ -121,7 +122,7 @@ LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressReturnsDecimalScaled
 	self assert: instruction assembly equals: 'movl	(%ebp,%eax,8), %edx'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithAlternativePrinterVariantReturnsAddressInTermsOfCalculation [
 
 	| dis instruction |
@@ -134,7 +135,7 @@ LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithAlternativePrint
 	self assert: instruction assembly equals: 'mov	edx, dword ptr [ebp + 8*eax]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithOffsetAndAlternativePrinterVariantReturnsAddressInTermsOfCalculation [
 
 	| dis instruction |
@@ -147,7 +148,7 @@ LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithOffsetAndAlterna
 	self assert: instruction assembly equals: 'mov	edx, dword ptr [ebp + 8*eax + 1]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithOffsetReturnsDecimalScaledAddress [
 
 	| dis instruction |
@@ -159,7 +160,7 @@ LLVMDisassemblerTests >> testDisassembleScaledIndexedAddressWithOffsetReturnsDec
 	self assert: instruction assembly equals: 'movl	1(%ebp,%eax,8), %edx'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testDisassembleWithAlternatePrinterVariantReturnsAlternateInstructionString [
 
 	| dis instruction |
@@ -170,16 +171,16 @@ LLVMDisassemblerTests >> testDisassembleWithAlternatePrinterVariantReturnsAltern
 	self assert: instruction assembly equals: 'inc	ecx'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testInitializeOnlyOnce [
 
 	| dis n |
 	dis := LLVMDisassembler i386.
-	n := WeakRegistry default keys occurrencesOf: dis.
+	n := FinalizationRegistry default keys occurrencesOf: dis.
 	self assert: n equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMDisassemblerTests >> testInvalidInstructionErrorContainsInvalidOpcode [
 
 	| dis |

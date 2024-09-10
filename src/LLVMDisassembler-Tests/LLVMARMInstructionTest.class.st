@@ -1,17 +1,18 @@
 Class {
-	#name : #LLVMARMInstructionTest,
-	#superclass : #TestCase,
-	#category : #'LLVMDisassembler-Tests'
+	#name : 'LLVMARMInstructionTest',
+	#superclass : 'TestCase',
+	#category : 'LLVMDisassembler-Tests',
+	#package : 'LLVMDisassembler-Tests'
 }
 
-{ #category : #utils }
+{ #category : 'utils' }
 LLVMARMInstructionTest >> disassemble: bytes [ 
 
 	^ LLVMARMDisassembler aarch64 disassembleInstructionIn: bytes pc: 0
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMARMInstructionTest >> testBranchEqualsRelativeHasCorrectAddress [
 
 	| inst |
@@ -22,7 +23,7 @@ LLVMARMInstructionTest >> testBranchEqualsRelativeHasCorrectAddress [
 	self assert: inst branchTargetAddress equals: 16r10000 - 44
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LLVMARMInstructionTest >> testNopInstructionDoesNotHaveBranchTargetAddress [
 
 	| inst |

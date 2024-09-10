@@ -2,22 +2,23 @@
 A LibLLVMDisassemblerTest is a test class for testing the behavior of LibLLVMDisassembler
 "
 Class {
-	#name : #LibLLVMDisassemblerTest,
-	#superclass : #TestCase,
+	#name : 'LibLLVMDisassemblerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'llvmDisasm'
 	],
-	#category : #'LLVMDisassembler-Tests'
+	#category : 'LLVMDisassembler-Tests',
+	#package : 'LLVMDisassembler-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 LibLLVMDisassemblerTest >> setUp [
 
 	super setUp.
 	llvmDisasm := LibLLVMDisassembler uniqueInstance.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LibLLVMDisassemblerTest >> testKnownMacPaths [
 
 	self assert: (llvmDisasm knownMacPaths isKindOf: Collection).
@@ -27,11 +28,11 @@ LibLLVMDisassemblerTest >> testKnownMacPaths [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LibLLVMDisassemblerTest >> testMacModuleName [
 
 	(Smalltalk os isMacOSX or: [ Smalltalk os isMacOS ])
 		ifFalse: [ self skip ].
-	self assert: (llvmDisasm macModuleName isKindOf: String).
-	self deny: llvmDisasm macModuleName isEmpty.
+	self assert: (llvmDisasm macLibraryName isKindOf: String).
+	self deny: llvmDisasm macLibraryName isEmpty.
 ]
