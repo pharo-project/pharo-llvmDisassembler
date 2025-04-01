@@ -201,7 +201,7 @@ LLVMDisassembler >> disassembleInstructionBytes: instructionBytes address: start
 
 		[ result := self disassembleInstructionIn: instructionBytes pc: pc ]
 			on: LLVMInvalidInstructionError
-			do: [ ^ nil].
+			do: [ ^ self newInvalidInstruction: instructionBytes address: startAddress].
 		
 		result address: startAddress.
 		
@@ -301,6 +301,12 @@ LLVMDisassembler >> initialize [
 LLVMDisassembler >> newInstruction [
 
 	^ LLVMInstruction new
+]
+
+{ #category : 'configuring' }
+LLVMDisassembler >> newInvalidInstruction: instructionBytes address: address [
+	
+	^nil
 ]
 
 { #category : 'configuration' }
