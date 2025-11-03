@@ -23,7 +23,8 @@ Class {
 	#name : 'LLVMDisassembler',
 	#superclass : 'FFIExternalObject',
 	#instVars : [
-		'options'
+		'options',
+		'tmpBuf'
 	],
 	#category : 'LLVMDisassembler',
 	#package : 'LLVMDisassembler'
@@ -220,7 +221,8 @@ LLVMDisassembler >> disassembleInstructionIn: bytes bufferSize: bytesSize pc: pc
 LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 
 	| string opsize |
-	string := ByteArray new: 255.
+	string := self tmpBufOfAtLeast: 255.
+	string from: 1 to: 255 put: 0.
 	opsize := self
 		disassembleInstructionIn: bytes
 		bufferSize: bytes size
@@ -246,9 +248,11 @@ LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes 
 	instructions := OrderedCollection new.
 	offset := 0.
 	[ instructions size < numberOfInstructions ] whileTrue: [ "assume 50 bytes tops per instruction"
-		instructionBytes := bytes
-			                    copyFrom: (offset + 1 min: bytes size)
-			                    to: (offset + 50 min: bytes size).
+		instructionBytes := self tmpBufOfAtLeast: 50.
+		instructionBytes replaceFrom: 1
+			to: (50 min: (bytes size - offset))
+			with: bytes
+			startingAt: (offset + 1 min: bytes size).
 
 		result := self
 			          disassembleInstructionBytes: instructionBytes
@@ -325,6 +329,14 @@ LLVMDisassembler >> setInstructionComments [
 LLVMDisassembler >> setOptions: options [
 
 	self ffiCall: #(int LLVMSetDisasmOptions(self, uint64 options))
+]
+
+{ #category : 'resources' }
+LLVMDisassembler >> tmpBufOfAtLeast: aSize [
+
+	(tmpBuf isNil or: [ tmpBuf size < aSize ])
+		ifTrue: [ tmpBuf := ByteArray newPinned: aSize ].
+	^ tmpBuf.
 ]
 
 { #category : 'configuring' }
