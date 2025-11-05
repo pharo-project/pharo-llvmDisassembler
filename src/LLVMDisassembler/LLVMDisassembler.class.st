@@ -23,7 +23,9 @@ Class {
 	#name : 'LLVMDisassembler',
 	#superclass : 'FFIExternalObject',
 	#instVars : [
-		'options'
+		'options',
+		'instructionStringBuf',
+		'instructionBytesBuf'
 	],
 	#category : 'LLVMDisassembler',
 	#package : 'LLVMDisassembler'
@@ -219,14 +221,14 @@ LLVMDisassembler >> disassembleInstructionIn: bytes bufferSize: bytesSize pc: pc
 { #category : 'disassembling' }
 LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 
-	| string opsize |
-	string := ByteArray new: 255.
+	| opsize |
+	instructionStringBuf from: 1 to: 255 put: 0.
 	opsize := self
 		disassembleInstructionIn: bytes
 		bufferSize: bytes size
 		pc: pc
-		outString: string
-		outStringSize: string size.
+		outString: instructionStringBuf
+		outStringSize: instructionStringBuf size.
 		
 	opsize = 0 ifTrue: [ 
 		LLVMInvalidInstructionError new
@@ -234,7 +236,7 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 			signal ].
 	
 	^ self newInstruction
-		assembly: (string utf8Decoded trimBoth: [ :char | char isSeparator | (char = Character null) ]);
+		assembly: (instructionStringBuf utf8Decoded trimBoth: [ :char | char isSeparator | (char = Character null) ]);
 		size: opsize;
 		yourself
 ]
@@ -242,16 +244,17 @@ LLVMDisassembler >> disassembleInstructionIn: bytes pc: pc [
 { #category : 'disassembling' }
 LLVMDisassembler >> disassembleNext: numberOfInstructions instructionsIn: bytes startAddress: startAddress pc: pc [
 
-	| instructions result offset instructionBytes |
+	| instructions result offset |
 	instructions := OrderedCollection new.
 	offset := 0.
-	[ instructions size < numberOfInstructions ] whileTrue: [ "assume 50 bytes tops per instruction"
-		instructionBytes := bytes
-			                    copyFrom: (offset + 1 min: bytes size)
-			                    to: (offset + 50 min: bytes size).
+	[ instructions size < numberOfInstructions ] whileTrue: [
+		instructionBytesBuf replaceFrom: 1
+			to: (50 min: (bytes size - offset))
+			with: bytes
+			startingAt: (offset + 1 min: bytes size).
 
 		result := self
-			          disassembleInstructionBytes: instructionBytes
+			          disassembleInstructionBytes: instructionBytesBuf
 			          address: startAddress + offset
 			          pc: pc.
 
@@ -294,6 +297,9 @@ LLVMDisassembler >> initialize [
 
 	"Should not call super initialize, because it will reinitialize the handle..."
 	options := 0.
+	"assume 50 bytes tops per instruction"
+	instructionBytesBuf := ByteArray new: 50.
+	instructionStringBuf  := ByteArray new: 255.
 	FinalizationRegistry default add: self
 ]
 
