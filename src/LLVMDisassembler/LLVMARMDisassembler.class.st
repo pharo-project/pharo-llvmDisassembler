@@ -5,20 +5,6 @@ Class {
 	#package : 'LLVMDisassembler'
 }
 
-{ #category : 'disassembling' }
-LLVMARMDisassembler >> disassembleInstructionBytes: instructionBytes address: startAddress pc: pc [
-
-	| result |
-
-		[ result := self disassembleInstructionIn: instructionBytes pc: pc ]
-			on: LLVMInvalidInstructionError
-			do: [ ^ self newInvalidInstruction: instructionBytes address: startAddress ].
-		
-		result address: startAddress.
-		
-		^ result
-]
-
 { #category : 'factory' }
 LLVMARMDisassembler >> newInstruction [
 
