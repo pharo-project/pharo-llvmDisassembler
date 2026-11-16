@@ -31,10 +31,10 @@ LibLLVMDisassembler >> knownMacPaths [
 { #category : 'accessing - platform' }
 LibLLVMDisassembler >> macLibraryName [
 	"Answer a <String> with the full path to the LLVM library"
-	
-	^ FFIMacLibraryFinder new
-		userPaths: self knownMacPaths;
-		findLibrary: 'libLLVM.dylib'
+
+	| finder |
+	finder := FFIMacLibraryFinder new.
+	^ finder findLibrary: 'libLLVM.dylib'
 ]
 
 { #category : 'accessing - platform' }
