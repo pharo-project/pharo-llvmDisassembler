@@ -34,6 +34,7 @@ LibLLVMDisassembler >> macLibraryName [
 
 	| finder |
 	finder := FFIMacLibraryFinder new.
+	finder userPaths: #('/opt/homebrew/opt/llvm/lib').
 	^ finder findLibrary: 'libLLVM.dylib'
 ]
 
